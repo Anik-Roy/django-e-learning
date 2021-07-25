@@ -1,0 +1,63 @@
+{% load crispy_forms_tags %}
+<!-- Comments Form -->
+<div class="card my-4">
+  <h5 class="card-header">Leave a Comment:</h5>
+  <div class="card-body">
+    <form method="POST">
+      {{ comment_form|crispy }}
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+  </div>
+</div>
+{% for comment in comments %}
+    <div style="display: flex; flex-direction: row" class="mb-1">
+      <img width="50px" height="50px" class="me-3 rounded-circle" src="/media/profile_pics/profilepic.jpg" alt="">
+      <div class="media-body">
+        <div style="display: flex; flex-direction: column">
+{#            <div style="display: flex; flex-direction: row; justify-items: center">#}
+                <h5 style="display: inline-block" class="mt-0 me-1">{{ comment.user }}<sub style="color: gray" class="ms-2">{{ comment.comment_date }}</sub></h5>
+{#            </div>#}
+            <div style="display: flex; flex-direction: row; justify-content: space-between">
+                {{ comment.comment }}
+                {% if comment.user == user %}
+                    <div>
+                        <a class="ms-3 me-1" href="{% url 'App_Article:edit_comment' pk=comment.pk %}"><i class="fas fa-pencil-alt" style="color: gray"></i></a> || <a class="ms-1" href="{% url 'App_Article:delete_comment' pk=comment.pk %}"><i class="fas fa-trash-alt" style="color: gray"></i></a>
+                    </div>
+                {% endif %}
+            </div>
+            <div style="width: 192px; height: 28px;">
+                <code>{{ comment.replies.count }} replies</code>&nbsp;&nbsp;<button onclick="show_comment_wrap(event)" class="btn btn-outline-success btn-sm float-end">REPLY</button>
+            </div>
+            <div class="comment-container mt-3">
+                {% for reply in comment.replies.all %}
+                    <div style="margin-left: 40px; width: 100%; display: flex; flex-direction: row" class="mt-2 mb-4">
+                      <img width="30px" height="30px" class="me-3 rounded-circle" src="/media/profile_pics/profilepic.jpg" alt="">
+                      <div class="media-body">
+                        <h6 style="display: inline-block" class="mt-0 me-1">{{ reply.user }}</h6><sub>{{ reply.comment_date }}</sub>
+                        <br/>
+                        {{ reply.comment }}
+                        {% if reply.user == user %}
+                             <a class="ms-3 me-1" href="{% url 'App_Article:edit_comment' pk=reply.pk %}"><i class="fas fa-pencil-alt" style="color: gray"></i></a> || <a class="ms-1" href="{% url 'App_Article:delete_comment' pk=reply.pk %}"><i class="fas fa-trash-alt" style="color: gray"></i></a>
+                        {% endif %}
+                      </div>
+                    </div>
+                {% endfor %}
+                <div class="comment-box">
+                    <img width="30px" height="30px" class="rounded-circle" src="/media/profile_pics/profilepic.jpg" alt="profile-pic" />
+                    <form id="my-form" method="POST">
+                        <textarea name="comment" cols="40" rows="5" placeholder="Add a public reply..." required></textarea>
+                        <input type="hidden" name="reply_id" value="{{ comment.pk }}">
+                        {% csrf_token %}
+                        <div class="comment-textfield float-right">
+                            <input type="submit" value="COMMENT" />
+                            <a onclick="cancelClicked(event)" id="clear-button">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="dropdown-divider mb-5"></div>
+{% endfor %}

@@ -1,0 +1,89 @@
+.question-header {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #d6d9dc;
+    margin-bottom: 20px;
+    padding: 12px 8px;
+    box-sizing: border-box;
+}
+.question-header .ask-question {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.question-header .filter-question {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.my-button:hover {
+    background-color: #ebeeee;
+    color: black;
+}
+.my-active {
+    background-color: #e4e6e8;
+}
+.question-wrap {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eff0f1;
+    box-sizing: border-box;
+    padding: 15px 8px;
+}
+.question-wrap .rating {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: flex-start;
+    width: 10%;
+}
+.question-wrap .rating .votes {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.question-wrap .rating .answer {
+    display: flex;
+    flex-direction: column;
+}
+.question-wrap .main-question-wrap {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    width: 90%;
+}
+.question-wrap .main-question-wrap .question {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    overflow: hidden;
+}
+.question-wrap .main-question-wrap .category {
+
+}
+.question-wrap .main-question-wrap .author {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.question-wrap .main-question-wrap .author .time {
+    text-align: start;
+    width: 140px;
+    font-size: 14px;
+    color: #6a737c;
+}
+.question-wrap .main-question-wrap .author .profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.question-wrap .main-question-wrap .author .profile img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+.question-wrap .main-question-wrap .author .profile .detail {
+    display: flex;
+    flex-direction: column;
+}

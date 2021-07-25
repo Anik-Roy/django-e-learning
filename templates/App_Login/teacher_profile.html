@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% block title_block %} @{{ user.profile.full_name }} {% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher_profile.css' %}">
+{% endblock %}
+{% block body_block %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="d-flex justify-content-start">
+                    <div class="image-container">
+                        {% if user.profile.profile_pic %}
+                            <img id="imgProfile" class="img-thumbnail" style="width: 150px; height: 150px" src="/media/{{ user.profile.profile_pic}}" alt="profile-pic" />
+                        {% else %}
+                            <img id="imgProfile" class="img-thumbnail" style="width: 150px; height: 150px" src="/media/profile_pics/profilepic.jpg" alt="profile-pic" />
+                        {% endif %}
+                    </div>
+                    <div class="ms-3">
+                        <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="">{{ user.email }}</a></h2>
+                        <h6 class="d-block"><a href="javascript:void(0)">{{ user.user_articles.count }}</a> Articles</h6>
+                        <h6 class="d-block"><a href="javascript:void(0)">{{ 0 }}</a> followers || <a href="javascript:void(0)">{{ 0 }}</a> following</h6>
+                        <br/>
+                        <a class="btn btn-warning btn-sm" href="{% url 'App_Login:edit-teacher-profile' %}">Edit Profile</a>
+                        || <a class="btn btn-success btn-sm" href="{% url 'App_Article:add_article' %}">Publish a Article</a>
+                        || <a class="btn btn-info btn-sm" href="{% url 'App_Article:add_category' %}">View/Create Category</a>
+                        || <a class="btn btn-secondary btn-sm" href="#my_article">My Articles</a>
+                        || <a class="btn btn-info btn-sm" href="#">My Quiz</a>
+                        || <a class="btn btn-success btn-sm" href="{% url 'App_Quiz:create_quiz' %}">Create a Quiz</a>
+                        || <a class="btn btn-success btn-sm" href="{% url 'App_Quiz:create_quiz_questions' %}">Add Questions to Previous Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="basicInfo-tab" data-bs-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="connectedServices-tab" data-bs-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Connected Services</a>
+                    </li>
+                </ul>
+                <div class="tab-content ml-1" id="myTabContent">
+                    <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Role</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {% if user.profile.is_student %}
+                                    <p>Student Account</p>
+                                {% elif user.profile.is_teacher %}
+                                    <p>Teacher Account</p>
+                                {% else %}
+                                    <p>Other</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Address</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.address }}
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Email</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.email }}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">City</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.city }}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Zipcode</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.zipcode }}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Country</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.country }}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Phone</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.phone }}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 col-5">
+                                <label style="font-weight:bold;">Date Joined</label>
+                            </div>
+                            <div class="col-md-8 col-6">
+                                {{ user.profile.date_joined }}
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                        <label for="facebook">Facebook:</label>
+                        <a id="facebook" href=""></a>
+                        <br/>
+                        <br/>
+                        <label for="website">Website:</label>
+                        <a id="website" href=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if my_articles != None %}
+            <div class="row" id="my_article">
+                <h4 class="text-center border-bottom mt-5 mb-3">My Articles</h4>
+                {% for my_article in my_articles %}
+                    <div class="col-md-3 mb-5">
+                        <div class="card p-2" style="width: 18rem;">
+{#                          {% if my_article.image %}#}
+{#                            <img width="100%" height="200px" src="/media/{{ my_article.image }}" class="card-img-top" alt="article-image">#}
+{#                          {% endif %}#}
+                          <div style="height: fit-content;" class="card-body">
+                            <h5 class="card-title text-success">{{ my_article.title }}</h5>
+                            <div class="border-bottom mb-1"></div>
+                            <div style="height: 100px; overflow-y: hidden">{{ my_article.content|safe }}</div>
+                          </div>
+                          <div class="card-footer" style="display: flex; flex-direction: row; justify-content: space-between">
+                            <a href="{% url 'App_Article:article_detail' pk=my_article.pk %}" class="view-article-btn">Read More</a>
+                            <a href="{% url 'App_Article:edit_article' pk=my_article.pk %}"><i class="fas fa-pencil-alt" style="color: #ef5350;"></i></a>
+                            <a href="{% url 'App_Article:delete_article' pk=my_article.pk %}"><i class="fas fa-trash-alt" style="color: #ef5350;"></i></a>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block script_block %}
+{% endblock %}

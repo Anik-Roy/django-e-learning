@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% load dict_filter_tag %}
+{% block title_block %}Add Quiz{% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" href="{% static 'css/quiz_style.css' %}">
+{% endblock %}
+{% block body_block %}
+    <div class="row">
+        <div class="col-md-8 mt-5">
+            {% if quiz_questions %}
+                <h4 class="text-success ms-5 mb-3">Total Score {{ total_correct }} in {{ total_marks }}</h4>
+                <div id="quiz">
+                    <ol>
+                        {% for quiz_question in quiz_questions %}
+                            <li>
+                                <h3>{{ quiz_question.quiz_question }}</h3>
+                                <div {% if user_correct_answer|dict_filter:quiz_question.pk == 'A' %} class="bg-success text-white"
+                                    {% elif user_wrong_answer|dict_filter:quiz_question.pk == 'A' %} class="bg-danger text-white"
+                                    {% endif %}>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-A" value="A" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-A">A) {{ quiz_question.option1 }} </label>
+                                </div>
+
+                                <div  {% if user_correct_answer|dict_filter:quiz_question.pk == 'B' %} class="bg-success text-white"
+                                {% elif user_wrong_answer|dict_filter:quiz_question.pk == 'B' %} class="bg-danger text-white"{% endif %}>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-B" value="B" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-B">B) {{ quiz_question.option2 }}</label>
+                                </div>
+
+                                <div  {% if user_correct_answer|dict_filter:quiz_question.pk == 'C' %} class="bg-success text-white"
+                                {% elif user_wrong_answer|dict_filter:quiz_question.pk == 'C' %} class="bg-danger text-white"{% endif %}>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-C" value="C" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-C">C) {{ quiz_question.option3 }}</label>
+                                </div>
+
+                                <div  {% if user_correct_answer|dict_filter:quiz_question.pk == 'D' %} class="bg-success text-white"
+                                {% elif user_wrong_answer|dict_filter:quiz_question.pk == 'D' %} class="bg-danger text-white"{% endif %}>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-D" value="D" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-D">D) {{ quiz_question.option4 }}</label>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                <a class="btn btn-success btn-sm ms-5 mb-2" href="{% url 'App_Quiz:show_quiz_questions' quiz_id=quiz_id %}">Try again!</a>
+            {% endif %}
+        </div>
+        {% include 'sidebar.html' %}
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

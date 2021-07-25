@@ -1,0 +1,58 @@
+{% load custom_tags %}
+<nav style="z-index: 1;" class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'App_Article:home' %}">Django E-Learning Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'App_Article:home' %}">Articles</a>
+        </li>
+        <li class="nav-item dropdown dropend">
+            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoryDropdown">
+                {% for category in categories %}
+                  <li style="font-size: 15px;">
+                    <a class="dropdown-item" href="{% url 'App_Article:home' %}?query_category={{ category.category_name|encode_plus }}">{{ category.category_name }}</a>
+                  </li>
+                  <div class="dropdown-divider"></div>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="nav-item dropdown dropend">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i class="fas fa-user-tie"></i>&nbsp;&nbsp;
+              {% if user.is_authenticated %}
+                {% if user.profile.full_name %}
+                    {{ user.profile.full_name }}
+                {% else %}
+                    {{ user.email }}
+                {% endif %}
+              {% else %}None{% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            {% if user.is_authenticated %}
+                {% if user.profile.is_teacher %}
+                    <li><a class="dropdown-item" href="{% url 'App_Login:teacher-profile' %}">Profile</a></li>
+                {% elif user.profile.is_student %}
+                    <li><a class="dropdown-item" href="{% url 'App_Login:student-profile' %}">Profile</a></li>
+                {% else %}
+                    <li><a class="dropdown-item" href="">Profile</a></li>
+                {% endif %}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'App_Login:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a class="dropdown-item" href="{% url 'App_Login:student-signup' %}">Student Signup</a></li>
+                <li><a class="dropdown-item" href="{% url 'App_Login:student-login' %}">Student Login</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'App_Login:teacher-signup' %}">Teacher Signup</a></li>
+                <li><a class="dropdown-item" href="{% url 'App_Login:teacher-login' %}">Teacher Login</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

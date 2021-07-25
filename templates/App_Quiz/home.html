@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% block title_block %}Blog Home{% endblock %}
+{% block style_block %}
+{% endblock %}
+{% block body_block %}
+    <div>
+        <ul class="list-group">
+            {% for quiz in object_list %}
+                <li class="list-group-item d-flex justify-content-start align-items-center">
+                    <a class="me-2" href="{% url 'App_Quiz:show_quiz_questions' quiz_id=quiz.pk %}">{{ quiz }}</a>
+                    <span class="badge badge-primary badge-pill text-success">{{ quiz.quiz_questions.count }} questions</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

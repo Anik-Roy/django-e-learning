@@ -1,0 +1,24 @@
+/*!
+ * Start Bootstrap - Blog Post (https://startbootstrap.com/template/blog-post)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-blog-post/blob/master/LICENSE)
+ */
+body {
+
+}
+.like-unlike-block {
+    margin-left: 60px;
+    border-bottom: 1px solid #cccccc;
+}
+.icon {
+    margin-right: 20px;
+    color: #909090;
+    font-size: 28px;
+    text-decoration: none;
+}
+.icon:hover {
+    color: #909090;
+}
+.icon i {
+    margin-right: 5px;
+}

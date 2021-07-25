@@ -1,0 +1,130 @@
+/* CONTENT */
+.content {
+  padding: 5px 0 0 0;
+}
+
+.card-panel {
+  display: inline-block;
+  margin: 10px 0 40px 0;
+  width: 100%;
+}
+.card-panel-header {
+  border-bottom: 1px solid rgba(0,0,0,.15);
+  margin-bottom: 25px;
+}
+
+.card-panel-heading {
+  color: rgba(0,0,0,.8);
+  display: inline-block;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  font-weight: 700;
+  font-style: normal;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.44)!important;
+}
+
+.more-link {
+  color: rgba(0, 0, 0, 0.44);
+  float:right;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.padding-right-10 {
+  padding-right:10px!important;
+}
+
+.padding-left-10 {
+  padding-left:10px!important;
+}
+.card-container {
+  margin-bottom: 20px;
+}
+
+.card {
+  display: inline-block;
+  padding:20px;
+}
+
+.card-header-image {
+  display: block;
+  /*margin: 0 0 0 20px;*/
+  /*background-position: 50% 50%;*/
+  /*background-size: cover;*/
+  width: 100%;
+  height: 100%;
+}
+
+.card-subheading {
+  color: rgba(0,0,0,.44);
+  font-size: 12px!important;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2 !important;
+  max-height: 2.4em !important;
+  min-height: 70px;
+  color: #212529;
+  text-decoration: none;
+}
+
+.article-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-basis: auto;
+}
+
+.article-info-left {
+  display: flex;
+}
+
+.profile-avatar {
+  display: block;
+  padding-right: 10px;
+}
+
+.avatar-image {
+  width: 40px;
+    height: 40px;
+      display: inline-block;
+    vertical-align: middle;
+    border-radius: 100%;
+}
+
+.username {
+  color: rgba(0,0,0,.8);
+  font-size: 12px;
+}
+
+.date, .read-time {
+  color: rgba(0,0,0,.44)!important;
+  font-size: 12px;
+}
+
+.bookmark-link {
+  color: rgba(0,0,0,.44);
+  display: inline-block;
+  font-size: 19px;
+  height: 24px;
+  vertical-align: sub;
+}
+
+.more-options-link {
+  color: rgba(0,0,0,.44);
+  display: inline-block;
+  font-size: 19px;
+  height: 24px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+/* END: CONTENT */

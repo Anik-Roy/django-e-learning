@@ -1,0 +1,56 @@
+{% load custom_tags %}
+<!-- Sidebar Widgets Column -->
+<div class="col-md-4">
+    <!-- Search Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">Search</h5>
+      <div class="card-body">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-append">
+            <button class="btn btn-secondary" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">Question/Answer Section</h5>
+      <div class="card-body">
+        <a href="{% url 'App_QuestionAnswer:question_list' %}">Browse/Ask questions</a>
+      </div>
+    </div>
+    <div class="card my-4">
+      <h5 class="card-header">Take part in quiz</h5>
+      <div class="card-body">
+          <a href="{% url 'App_Quiz:home' %}">Participate in Quiz</a>
+      </div>
+    </div>
+
+    <!-- Categories Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">Categories</h5>
+      <div class="card-body">
+
+            {% for chunk in categories|as_chunks:6 %}
+                <div class="row">
+                    {% for chunk2 in chunk|as_chunks:3 %}
+                      <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                          {% for category in chunk2 %}
+                              <li style="font-size: 15px; border: 1px solid #d6d9dc; margin-bottom: 5px; padding: 5px;">
+                                <a style="text-decoration: none;" href="{% url 'App_Article:home' %}?query_category={{ category.category_name|encode_plus }}">{{ category.category_name|category_range_filter }}</a>
+                              </li>
+{#                              <div class="dropdown-divider"></div>#}
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endfor %}
+                </div>
+                <div class="dropdown-divider"></div>
+            {% endfor %}
+
+      </div>
+    </div>
+</div>

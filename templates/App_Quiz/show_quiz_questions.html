@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% block title_block %}Add Quiz{% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" href="{% static 'css/quiz_style.css' %}">
+{% endblock %}
+{% block body_block %}
+    <div class="row">
+        <div class="col-md-8 mt-5">
+            {% if object_list.count == 0 %}
+                <h4>No question added in this quiz! Please come after some time!</h4>
+            {% endif %}
+            {% if object_list %}
+                <form class="p-2" method="POST" id="quiz">
+                    <ol>
+                        {% for quiz_question in object_list %}
+                            <li>
+                                <h3>{{ quiz_question.quiz_question }}</h3>
+                                <div>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-A" value="A" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-A">A) {{ quiz_question.option1 }} </label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-B" value="B" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-B">B) {{ quiz_question.option2 }}</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-C" value="C" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-C">C) {{ quiz_question.option3 }}</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" name="{{ quiz_question.pk }}" id="question-{{ quiz_question.pk }}-answers-D" value="D" />
+                                    <label for="question-{{ quiz_question.pk }}-answers-D">D) {{ quiz_question.option4 }}</label>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    {% csrf_token %}
+                    <input class="btn btn-success ms-5" type="submit" value="Submit" />
+                </form>
+            {% endif %}
+        </div>
+        {% include 'sidebar.html' %}
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

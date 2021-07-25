@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title_block %}Article Home{% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block body_block %}
+    <div class="content"> <!-- Card Grids Conteiner -->
+        <!-- Card Grid -->
+        <div class="card-panel">
+            <!-- Card Grid Header -->
+            <div class="card-panel-header">
+                <span class="card-panel-heading">You might like</span>
+                <a class="more-link" href="">MORE ></a>
+            </div> <!-- END: Card Grid Header -->
+            <!-- Card Grid Content -->
+            <div class="card-panel-content row g-0">
+                <!-- Card Container -->
+                {% for article in articles %}
+                    <div class="col-md-4 card-container padding-right-10 ">
+                        <!-- Card -->
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="card-subheading">
+                                        Based on your interests
+                                    </div>
+                                    <div class="heading">
+                                        <a class="heading" href="">{{ article.title }}</a>
+                                    </div>
+                                    <div class="article-info">
+                                        <div class="article-info-left">
+                                            <div class="">
+                                                <a class="profile-avatar">
+                                                    <img src="/media/profile_pics/profilepic.jpg"
+                                                         class="avatar-image" alt="profile-pic">
+                                                </a>
+                                            </div>
+                                            <div class="article-info-center">
+                                                <div class="username">{{ article.user.email }}</div>
+                                                <div><span class="date">{{ article.created_at }}  </span><span
+                                                        class="read-time"> 4 min read</span></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="article-info-right">
+                                            <i class="fa fa-bookmark-o bookmark-link" aria-hidden="true"></i>
+                                            <i class="fa fa-angle-down more-options-link" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="" style="display: block"><img class="card-header-image" src="/media/{{ article.image }}" alt="article-image"/></a>
+                                </div>
+                            </div>
+                        </div><!-- END Card -->
+                    </div><!-- END Card Container -->
+                {% endfor %}
+            </div> <!-- END Card Grid Content -->
+        </div> <!-- END Card Grid -->
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

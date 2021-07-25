@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}Add Category{% endblock %}
+{% block style_block %}{% endblock %}
+{% block body_block %}
+    <h3>Edit your comment</h3>
+    <form method="POST">
+        {{ form|crispy }}
+        {% csrf_token %}
+        <input class="btn btn-primary btn-sm mt-3" type="submit" value="UPDATE COMMENT" />
+    </form>
+{% endblock %}

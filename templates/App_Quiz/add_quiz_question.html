@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% block title_block %}Add Quiz{% endblock %}
+{% block style_block %}
+{% endblock %}
+{% block body_block %}
+    <div class="container p-5">
+        <h3>Add Questions to {% if quiz %} quiz named " {{ quiz }} " {% else  %} Quiz{% endif %}</h3>
+        <form method="POST">
+{#            {% if quiz %}#}
+{#                <input type="text" name="quiz_wrap" value="{{ quiz.pk }}">#}
+{#            {% endif %}#}
+            {{ form|crispy }}
+            {% csrf_token %}
+            <input class="btn btn-success btn-sm mt-2" type="submit" value="Add Questions" />
+        </form>
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

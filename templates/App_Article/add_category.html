@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}Add Category{% endblock %}
+{% block style_block %}{% endblock %}
+{% block body_block %}
+    <div class="container">
+        <h3>Add a new category</h3>
+        <form method="POST">
+            {{ form|crispy }}
+            {% csrf_token %}
+            <input class="btn btn-success btn-sm mt-2" type="submit" value="CREATE" />
+        </form>
+        <div class="categories mt-3">
+            <h4 class="text-center mb-3 p-2 border border-secondary">My Categories</h4>
+            <table class="table mb-5">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Category Name</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Updated At</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for my_category in my_categories %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ my_category.category_name }}</td>
+                      <td><a href="">{{ my_category.created_by }}</a></td>
+                      <td>{{ my_category.created_at }}</td>
+                      <td>{{ my_category.updated_at }}</td>
+                      <td>
+                          {% ifequal my_category.created_by user %}
+                            <a class="me-1" href="javascript:void(0)" onclick="edit_category(event, '{{ my_category.pk }}', '{{ my_category.category_name }}')"><i class="fas fa-pencil-alt" style="color: gray"></i></a> || <a class="ms-1" href="javascript:void(0)" onclick="delete_category(event, '{{ my_category.pk }}')"><i class="fas fa-trash-alt" style="color: gray"></i></a>
+                          {% else %}
+                              <p style="color: gray; cursor: not-allowed">Permission Denied</p>
+                          {% endifequal %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+            <h4 class="text-center mb-3 p-2 border border-secondary">Other's Categories</h4>
+            <table class="table mb-5">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Category Name</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Updated At</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for other_category in other_categories %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ other_category.category_name }}</td>
+                      <td><a href="">{{ other_category.created_by }}</a></td>
+                      <td>{{ other_category.created_at }}</td>
+                      <td>{{ other_category.updated_at }}</td>
+                      <td>
+                          {% ifequal other_category.created_by user %}
+                            <a class="me-1" href="javascript:void(0)" onclick="edit_category(event, '{{ other_category.pk }}', '{{ other_category.category_name }}')"><i class="fas fa-pencil-alt" style="color: gray"></i></a> || <a class="ms-1" href="javascript:void(0)" onclick="delete_category(event, '{{ other_category.pk }}')"><i class="fas fa-trash-alt" style="color: gray"></i></a>
+                          {% else %}
+                              <p style="color: gray; cursor: not-allowed">Permission Denied</p>
+                          {% endifequal %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="category-edit-modal" tabindex="-1" aria-labelledby="category-edit-modal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Category Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form id="edit-form" method="POST">
+                      <label for="category-title">Category name*</label>
+                      <input class="form-control" id="category-title" name="category_name" type="text" maxlength="100" placeholder="Enter a category name" required/>
+                      <div class="error-wrap alert alert-danger d-none" role="alert">
+                      </div>
+                      {% csrf_token %}
+                      <input class="btn btn-success btn-sm mt-2" type="submit" value="Update" />
+                  </form>
+                {% csrf_token %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_block %}
+    <script>
+        function edit_category(event, pk, title) {
+            let category_title = document.getElementById('category-title');
+            category_title.value = title;
+            let error_wrap = document.querySelector('.error-wrap');
+            console.log(error_wrap);
+            let myModal = new bootstrap.Modal(document.getElementById('category-edit-modal'));
+
+            $('#edit-form').submit(function (e) {
+                e.preventDefault();
+                let articleID = pk;
+                let token = '{{ csrf_token }}';
+                let category_form = document.getElementById('edit-form');
+                let data = new FormData(category_form);
+                data.append('articleID', articleID)
+                $.ajax({
+                    headers: {'X-CSRFToken': token},
+                    method: 'POST',
+                    url: '/articles/edit-category/',
+                    datatype: 'json',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(data === 'success') {
+                            myModal.hide();
+                            window.location = window.location.href;
+                        } else {
+                            error_wrap.classList.remove('d-none');
+                            error_wrap.innerHTML = data;
+                        }
+                    },
+                    error: function (data) {
+                        myModal.hide();
+                        alert('An error occurred! Please try again!');
+                    },
+                });
+            });
+            myModal.show();
+        }
+
+        function delete_category(event, pk) {
+            let articleID = pk;
+            let token = '{{ csrf_token }}';
+            let answer = confirm('Are you sure you want to delete this category?');
+            if(answer) {
+                $.ajax({
+                    headers: {'X-CSRFToken': token},
+                    method: 'POST',
+                    url: '/articles/delete-category/',
+                    datatype: 'json',
+                    data: {'articleID': articleID},
+                    success: function (data) {
+                        if (data === 'success') {
+                            window.location = window.location.href;
+                        } else {
+                            alert('An error occurred! Please try again!');
+                        }
+                    },
+                    error: function (data) {
+                        alert('An error occurred! Please try again!');
+                    },
+                })
+            }
+        }
+    </script>
+{% endblock %}

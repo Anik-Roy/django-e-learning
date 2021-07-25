@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Edit Student Profile - {{ user.profile.full_name }} {% endblock %}
+{% block style_block %}
+{% endblock %}
+{% block body_block %}
+    <div class="container">
+        <h3 class="text-center">Complete your profile</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form|crispy }}
+            {% csrf_token %}
+            <input class="btn btn-primary btn-sm mt-3" type="submit" value="Save Profile" />
+        </form>
+    </div>
+{% endblock %}
+{% block script_block %}
+{% endblock %}

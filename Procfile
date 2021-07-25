@@ -1,0 +1,1 @@
+web: gunicorn E_LEARNING.wsgi

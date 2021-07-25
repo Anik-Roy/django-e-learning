@@ -1,0 +1,42 @@
+.comment-container {
+    display: none;
+}
+.comment-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.comment-box img {
+    margin: 5px;
+}
+.comment-box form {
+    margin: 15px;
+    width: 100%;
+}
+.comment-box form textarea {
+    height: 25px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #aaa;
+    background-color: transparent;
+    margin-bottom: 10px;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+}
+.comment-box form textarea:focus {
+    border-bottom: 2px solid black;
+    transition: border-bottom 1s ease-out;
+}
+.comment-textfield {
+    /*display: none;*/
+}
+.comment-textfield input[type='submit'], .comment-textfield a {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}

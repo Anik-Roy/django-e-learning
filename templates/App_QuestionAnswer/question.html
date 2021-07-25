@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block title_block %}Blog Home{% endblock %}
+{% block style_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/question_list.css' %}">
+{% endblock %}
+{% block body_block %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="question-header">
+                    <div class="ask-question">
+                        <p style="font-size: 18px; letter-spacing: 2px"><b>All Questions</b></p>
+                        <a style="width: -moz-fit-content; width: fit-content;" class="btn btn-primary" href="{% url 'App_QuestionAnswer:ask_question' %}">Ask Question</a>
+                    </div>
+                    <div class="filter-question">
+                        <span style="font-size: 18px; letter-spacing: 2px;">1000 questions</span>
+                        <div class="filter">
+                            <button type="button" class="btn btn-outline-dark my-button my-active">Newest</button>
+                            <button type="button" class="btn btn-outline-dark my-button">Active</button>
+                            <button type="button" class="btn btn-outline-dark my-button">Bountied</button>
+                            <button type="button" class="btn btn-outline-dark my-button">Answered</button>
+                            <button type="button" class="btn btn-outline-dark my-button">More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="questions">
+                    {% for question in questions %}
+                        <div class="question-wrap">
+                            <div class="rating">
+                                <div class="votes">
+                                    <span>0</span>
+                                    <span>Votes</span>
+                                </div>
+                                <div class="answer">
+                                    <span>0</span>
+                                    <span>Answer</span>
+                                </div>
+                            </div>
+                            <div class="main-question-wrap">
+                                <div class="question">
+                                    <a style="font-size: 20px; text-decoration: none; letter-spacing: 1px;" href="{% url 'App_QuestionAnswer:question_detail' pk=question.pk %}">{{ question.title }}</a>
+                                    {{ question.content|safe }}
+                                </div>
+                                <div class="category">
+                                    <a href="#">{{ question.category }}</a>
+                                </div>
+                                <div class="author">
+                                    <div class="time">
+                                        <time>{{ question.created_at }}</time>
+                                    </div>
+                                    <div class="profile">
+                                        <img src="/media/profile_pics/profilepic.jpg" alt="profile-pic"/>
+                                        <div class="detail">
+                                            <span>{{ question.user }}</span>
+                                            <span>Reputation Score</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% include 'sidebar.html' %}
+        </div>
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

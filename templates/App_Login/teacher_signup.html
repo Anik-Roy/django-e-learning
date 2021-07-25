@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}Teacher Signup{% endblock %}
+{% block style_block %}{% endblock %}
+{% block body_block %}
+    <div class="container">
+        <h3>CREATE TEACHER ACCOUNT</h3>
+        <form method="POST">
+            {{ form|crispy }}
+            {% csrf_token %}
+            <input class="btn btn-success btn-sm" type="submit" value="CREATE ACCOUNT"/>
+        </form>
+    </div>
+{% endblock %}
+{% block script_block %}{% endblock %}

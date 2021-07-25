@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}Add Category{% endblock %}
+{% block style_block %}{% endblock %}
+{% block body_block %}
+    <div class="container">
+        <h3>Edit your comment</h3>
+        <form method="POST" class="mb-2">
+            <p>Are you sure to delete this comment?</p>
+            {% csrf_token %}
+            <input class="btn btn-primary btn-sm" type="submit" value="DELETE" />
+        </form>
+        <a style="text-decoration: none;" href="{% url 'App_Article:article_detail' pk=article_id %}">GO BACK</a>
+    </div>
+{% endblock %}
